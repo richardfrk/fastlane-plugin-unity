@@ -12,6 +12,7 @@ module Fastlane
         build_cmd << " -executeMethod \"#{params[:execute_method]}\"" unless params[:execute_method].nil?
         build_cmd << " -username \"#{params[:username]}\"" unless params[:username].nil?
         build_cmd << " -password \"#{params[:password]}\"" unless params[:password].nil?
+        build_cmd << " -iOSSimulator" if params[:ios_simulator]
         build_cmd << " -logfile"
 
         # Must be the last option
@@ -38,7 +39,7 @@ module Fastlane
       end
 
       def self.authors
-        ["thedoritos"]
+        ["thedoritos","richardfrk"]
       end
 
       def self.return_value
@@ -94,6 +95,12 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :background,
                                   env_name: "FL_UNITY_BACKGROUND",
                                description: "Should run command in background (adding &)",
+                             default_value: false,
+                                 is_string: false),
+          
+          FastlaneCore::ConfigItem.new(key: :ios_simulator,
+                                  env_name: "FL_UNITY_SIMULATOR",
+                               description: "Build project for iOS simulator",
                              default_value: false,
                                  is_string: false)
         ]
